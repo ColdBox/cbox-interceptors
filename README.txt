@@ -1,0 +1,1 @@
+This holds a collection of useful ColdBox interceptors.  You are welcomed to fork and add more to these beautiful collection.
