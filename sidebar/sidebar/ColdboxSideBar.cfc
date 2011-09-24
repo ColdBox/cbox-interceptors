@@ -3,7 +3,7 @@
 Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
-Author 	 :	Ernst van der Linden ( evdlinden@gmail.com | http://evdlinden.behindthe.net )
+Author 	 :	Luis Majano & Ernst van der Linden ( evdlinden@gmail.com | http://evdlinden.behindthe.net )
 Date     :	7/31/2008
 Description : Intercepts if we need to render the ColdBox SideBar
 		
@@ -92,7 +92,7 @@ Modification History:
 
 	<!--- afterAspectsLoad --->
 	<cffunction name="afterAspectsLoad" access="public" returntype="void" output="false">
-		<cfargument name="event" required="true" type="coldbox.system.web.context.RequestContext">
+		<cfargument name="event" required="true" type="any">
 		
 		<!--- Set isEnabled property after environmentControl interception --->
 		<cfif not settingExists('ColdBoxSideBar') or not isBoolean( getSetting('ColdBoxSideBar') )>
@@ -105,7 +105,7 @@ Modification History:
 	
 	<!--- preProcess --->
 	<cffunction name="preProcess" access="public" returntype="void" output="false">
-		<cfargument name="event" required="true" type="coldbox.system.web.context.RequestContext">
+		<cfargument name="event" required="true" type="any">
 		
 		<cfset var rc = event.getCollection()>
 		<cfset var contentType = ''>
@@ -160,7 +160,7 @@ Modification History:
 
 	<!--- postRender --->
 	<cffunction name="postRender" access="public" returntype="void" output="false">
-		<cfargument name="event" required="true" type="coldbox.system.web.context.RequestContext">
+		<cfargument name="event" required="true" type="any">
 		<!--- Render SideBar? --->
 		<cfif isStruct(event.getRenderData()) and structisEmpty(event.getRenderData())>
 			<!--- Render SideBar? --->
@@ -173,7 +173,7 @@ Modification History:
 
 	<!--- onException --->
 	<cffunction name="onException" access="public" returntype="void" output="false">
-		<cfargument name="event" required="true" type="coldbox.system.web.context.RequestContext">
+		<cfargument name="event" required="true" type="any">
 		<!--- Render SideBar? --->
 		<cfif getIsRender(arguments.event) >
 			<!--- Append rendered sideBar to buffer --->
@@ -185,7 +185,7 @@ Modification History:
 	
 	<!--- getRenderedSideBar --->
 	<cffunction name="getRenderedSideBar" access="public" output="false" returntype="string" hint="Render our beautiful sidebar">
-		<cfargument name="event" required="true" type="coldbox.system.web.context.RequestContext">
+		<cfargument name="event" required="true" type="any">
 		
 		<cfset var renderedSideBar = ''>
 		<cfset var i =0>
@@ -221,14 +221,14 @@ Modification History:
 
 		<!--- Render? --->
 		<cfif getIsRender(arguments.event)>
-			<cfsavecontent variable="renderedSideBar"><cfinclude template="../includes/coldboxsidebar/ColdBoxSideBar.cfm"></cfsavecontent>
+			<cfsavecontent variable="renderedSideBar"><cfinclude template="includes/coldboxsidebar/ColdBoxSideBar.cfm"></cfsavecontent>
 		</cfif>
 		<cfreturn renderedSideBar>	
 	</cffunction>
 	
 	<!--- Get is render --->
 	<cffunction name="getIsRender" access="private" returntype="boolean" output="false" hint="Checks if we can render the sidebar">
-		<cfargument name="event" required="true" type="coldbox.system.web.context.RequestContext">
+		<cfargument name="event" required="true" type="any">
         <cfreturn ( getproperty('isEnabled') AND NOT arguments.event.isProxyRequest() )>
 	</cffunction>
 	
@@ -265,7 +265,7 @@ Modification History:
 		
  		<cftry>
 			<!--- Read SideBar XML --->
-			<cffile action="read" file="#ExpandPath('/coldbox/system/web/config/ColdBoxSideBar.xml')#" variable="sideBarXMLDoc">
+			<cffile action="read" file="#ExpandPath('ColdBoxSideBar.xml')#" variable="sideBarXMLDoc">
 			<!--- Parse XML --->
 			<cfset sideBarXML = XmlParse(sideBarXMLDoc)>
 			<!--- Set xml properties array --->

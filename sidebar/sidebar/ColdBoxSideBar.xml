@@ -54,8 +54,8 @@ Modification History:
 			<!-- Vertical alignment of the image: top,middle or bottom  -->
 			<Property name="imageVAlign">middle</Property>
 			
-			<!-- includes directory: normally /coldbox/includes/coldboxsidebar/ -->
-			<Property name="includesDirectory">/coldbox/system/includes/coldboxsidebar/</Property>
+			<!-- includes directory: normally interceptors/sidebar/includes/ -->
+			<Property name="includesDirectory">interceptors/sidebar/includes/</Property>
 			
 	</Properties>
 </Sidebar>
