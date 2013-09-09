@@ -21,17 +21,22 @@ Instructions:
 - Place the _deploy.tag and deploy.xml ANT task in your /config directory of your application.
 - Add the Deploy interceptor declaration
 
-<Interceptor class="coldbox.system.interceptors.Deploy">
-	<Property name="tagFile">config/_deploy.tag</Property>
-	<Property name="deployCommandObject">model.deployCommand</Property>
-</Interceptor>
+interceptors = [
+	{ class="path.to.Deploy", properties={
+		tagFile = "config/_deploy.tag",
+		deployCommandModel = "DeployCommand"
+	}}
+];
 
 Interceptor Properties:
 
 - tagFile : config/_deploy.tag [required] The location of the tag.
 - deployCommandObject : The class path of the deploy command object to use [optional]. 
+- deployCommandModel: The WireBox ID or full path to a object to use as your command object
 
-This object is a cfc that must implement an init(controller) method and an execute() method.  
+If using the deployCommandObject setting then this object is a CFC that must implement an init(controller) method
+and an execute() method.  If using the deployCommandModel then it must implement a execute() method only.
+  
 This command object will be executed before the framework reinit bit is set so you can do
 any kind of cleanup code or anything you like:
 
@@ -138,9 +143,8 @@ any kind of cleanup code or anything you like:
 								instance.deployCommandObject.execute();
 							}
 							
-							// Reload ColdBox
-							getController().setColdboxInitiated(false);
-							getController().setAspectsInitiated(false);
+							// Reload Application
+							applicationStop();
 							
 							// Log Reloading
 							if( log.canInfo() ){
@@ -159,7 +163,6 @@ any kind of cleanup code or anything you like:
 			<cfset configure()>
 		</cfif>
 	</cffunction>
-
 		 
 <!------------------------------------------- PRIVATE ------------------------------------------->
 	

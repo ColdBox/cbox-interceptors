@@ -18,6 +18,10 @@ Description :
 ChangeLog
 ============================================================
 
+== Version 3.0 =
+# Upgraded for CF9.01 and above
+# Upgraded to use applicationstop() instead.
+
 == Version 2.0 ==
 # Moved to ForgeBox
 
