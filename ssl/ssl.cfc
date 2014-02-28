@@ -54,10 +54,12 @@
 			
 			// check if SSL request and SSL Required
 			if( !isSSL && isSSLRequired(event) ){
+				flash.keep();
 				setNextEvent(uri=cgi.script_name & cgi.path_info,ssl=true,statusCode=302,queryString=cgi.query_string);
 			} 
 			// Check if in SSL and NO SSL Required
 			else if( isSSL && !isSSLRequired(event) ){
+				flash.keep();
 				setNextEvent(uri=cgi.script_name & cgi.path_info,ssl=false,statusCode=302,queryString=cgi.query_string);
 			}
 		</cfscript>
