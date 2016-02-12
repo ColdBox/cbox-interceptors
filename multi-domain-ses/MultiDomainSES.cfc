@@ -17,7 +17,7 @@ Description :
 		<cfscript>
 		
 			// set the base URL according to domain or whatever strategy you like.
-			arguments.event.setSESBaseURL("http://" & cgi.http_host & "/index.cfm");
+			arguments.event.setSESBaseURL( ((arguments.event.isSSL())? "https://" : "http://")  & cgi.http_host & "/index.cfm");
 		
 		</cfscript>
 	</cffunction>
